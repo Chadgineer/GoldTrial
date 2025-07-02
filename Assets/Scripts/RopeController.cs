@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class RopeController : MonoBehaviour
 {
@@ -8,7 +7,6 @@ public class RopeController : MonoBehaviour
     [SerializeField] private float shootSpeed = 10f;
     [SerializeField] private float maxLength = 8f;
     [SerializeField] private float returnSpeed = 12f;
-    [SerializeField] private LayerMask grabbableLayer;
 
     private float currentAngle;
     private int swingDirection = 1;
@@ -18,107 +16,80 @@ public class RopeController : MonoBehaviour
     private bool isReturning = false;
     private Vector3 shootDirection;
     private float currentLength = 0f;
-    private int grabbedCount = 0;
 
-    private void Start()
+    private Transform grabbedObject = null;
+
+    void Start()
     {
         initialPosition = transform.position;
         currentAngle = -swingAngle / 2f;
     }
 
-    private void Update()
+    void Update()
     {
         if (!isShooting && !isReturning)
         {
-            SwingRope();
+            transform.position = initialPosition;
+
+            currentAngle += swingDirection * swingSpeed * Time.deltaTime;
+            if (currentAngle >= swingAngle / 2f)
+            {
+                swingDirection = -1;
+                currentAngle = swingAngle / 2f;
+            }
+            else if (currentAngle <= -swingAngle / 2f)
+            {
+                swingDirection = 1;
+                currentAngle = -swingAngle / 2f;
+            }
+
+            transform.rotation = Quaternion.Euler(0, 0, 270 + currentAngle);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                StartCoroutine(ShootRopeCoroutine());
+                isShooting = true;
+                shootDirection = transform.right;
             }
         }
-    }
-
-    private void SwingRope()
-    {
-        currentAngle += swingDirection * swingSpeed * Time.deltaTime;
-        if (currentAngle >= swingAngle / 2f)
+        else if (isShooting)
         {
-            swingDirection = -1;
-            currentAngle = swingAngle / 2f;
-        }
-        else if (currentAngle <= -swingAngle / 2f)
-        {
-            swingDirection = 1;
-            currentAngle = -swingAngle / 2f;
-        }
-        transform.rotation = Quaternion.Euler(0, 0, 270 + currentAngle);
-    }
+            transform.position += shootDirection * shootSpeed * Time.deltaTime;
+            currentLength += shootSpeed * Time.deltaTime;
 
-    private IEnumerator ShootRopeCoroutine()
-    {
-        isShooting = true;
-        shootDirection = transform.right;
-        currentLength = 0f;
-
-        while (currentLength < maxLength)
-        {
-            yield return new WaitForFixedUpdate();
-            transform.position += shootDirection * shootSpeed * Time.fixedDeltaTime;
-            currentLength += shootSpeed * Time.fixedDeltaTime;
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, shootDirection, 0.1f, grabbableLayer);
-            if (hit.collider != null && hit.collider.attachedRigidbody != null)
+            if (currentLength >= maxLength)
             {
-                StartCoroutine(HandleObjectGrab(hit.collider.attachedRigidbody));
                 isShooting = false;
-                yield break;
+                isReturning = true;
             }
         }
+        else if (isReturning)
+        {
+            Vector3 dir = (initialPosition - transform.position).normalized;
+            transform.position += dir * returnSpeed * Time.deltaTime;
 
+            if (Vector3.Distance(transform.position, initialPosition) < 0.1f)
+            {
+                transform.position = initialPosition;
+                currentLength = 0f;
+                isReturning = false;
+
+                if (grabbedObject != null)
+                {
+                    grabbedObject.SetParent(null);
+                    Destroy(grabbedObject.gameObject);
+                    grabbedObject = null;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!isShooting) return;
+
+        grabbedObject = other.transform;
+        grabbedObject.SetParent(transform);
         isShooting = false;
-        StartCoroutine(ReturnRopeCoroutine());
-    }
-
-    private IEnumerator ReturnRopeCoroutine()
-    {
         isReturning = true;
-        while (Vector3.Distance(transform.position, initialPosition) > 0.1f)
-        {
-            yield return new WaitForFixedUpdate();
-            Vector3 dir = (initialPosition - transform.position).normalized;
-            transform.position += dir * returnSpeed * Time.fixedDeltaTime;
-        }
-        transform.position = initialPosition;
-        currentLength = 0f;
-        isReturning = false;
-    }
-
-    private IEnumerator HandleObjectGrab(Rigidbody2D grabbedBody)
-    {
-        isReturning = true;
-
-        if (grabbedBody != null)
-        {
-            grabbedBody.bodyType = RigidbodyType2D.Kinematic;
-            grabbedBody.transform.SetParent(transform);
-        }
-
-        while (Vector3.Distance(transform.position, initialPosition) > 0.1f)
-        {
-            yield return new WaitForFixedUpdate();
-            Vector3 dir = (initialPosition - transform.position).normalized;
-            transform.position += dir * returnSpeed * Time.fixedDeltaTime;
-        }
-
-        if (grabbedBody != null)
-        {
-            grabbedCount++;
-            grabbedBody.transform.SetParent(null);
-            Destroy(grabbedBody.gameObject);
-        }
-        transform.position = initialPosition;
-        currentLength = 0f;
-        isReturning = false;
     }
 }
