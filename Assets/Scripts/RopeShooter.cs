@@ -75,17 +75,17 @@ public class RopeShooter : MonoBehaviour
             case "gold1":
                 grabbedObject.localPosition = new Vector3(0f, -1.75f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.Add(1);
+                goldOreManager.AddGoldOre(1);
                 break;
             case "gold2":
                 grabbedObject.localPosition = new Vector3(0f, -3.75f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.Add(2);
+                goldOreManager.AddGoldOre(2);
                 break;
             case "gold3":
                 grabbedObject.localPosition = new Vector3(0f, -5.25f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.Add(3);
+                goldOreManager.AddGoldOre(3);
                 break;
             default:
                 grabbedObject.localPosition = new Vector3(0f, 0f, 1f);

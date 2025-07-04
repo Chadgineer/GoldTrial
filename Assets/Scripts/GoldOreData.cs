@@ -4,14 +4,14 @@ using UnityEngine;
 public class GoldOreData : ScriptableObject
 {
     [SerializeField] private int value;
-    public int Value => value;
+    public int goldOres => value;
 
-    public void SetValue(int val)
+    public void SetGoldOre(int val)
     {
         value = val;
     }
 
-    public void Add(int amount)
+    public void AddGoldOre(int amount)
     {
         value += amount;
     }

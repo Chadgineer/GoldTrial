@@ -1,37 +1,51 @@
+using TMPro;
 using UnityEngine;
 
 public class GoldOreManager : MonoBehaviour
 {
     [SerializeField] private GoldOreData goldOreData;
     private const string MoneyKey = "Money";
+    [SerializeField] private TextMeshProUGUI goldOreUI;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         int saved = PlayerPrefs.GetInt(MoneyKey, 0);
-        goldOreData.SetValue(saved);
+        goldOreData.SetGoldOre(saved);
+        UpdateGoldOreUI();
     }
 
-    public void Add(int amount)
+    public void UpdateGoldOreUI()
     {
-        goldOreData.Add(amount);
-        Save();
+        goldOreUI.text = goldOreData.goldOres.ToString();
     }
-    public bool Spend(int amount)
+
+    public void AddGoldOre(int amount)
     {
+        goldOreData.AddGoldOre(amount);
+        SaveGoldOre();
+        UpdateGoldOreUI();
+    }
+    public bool SpendGoldOre(int amount)
+    { 
         bool result = goldOreData.Spend(amount);
-        if (result) Save();
+        if (result) SaveGoldOre();
+        UpdateGoldOreUI();
         return result;
+       
     }
 
-    public int Get()
+    public int GetGoldOre()
     {
-        return goldOreData.Value;
+        UpdateGoldOreUI();
+        return goldOreData.goldOres;
+        
     }
 
-    private void Save()
+    private void SaveGoldOre()
     {
-        PlayerPrefs.SetInt(MoneyKey, goldOreData.Value);
+        PlayerPrefs.SetInt(MoneyKey, goldOreData.goldOres);
         PlayerPrefs.Save();
+        UpdateGoldOreUI();
     }
 }
