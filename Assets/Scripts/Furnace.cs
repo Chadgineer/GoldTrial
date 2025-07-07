@@ -13,6 +13,7 @@ public class Furnace : MonoBehaviour
     private void Awake()
     {
         craftTimeHold = craftTime;
+        
     }
     public bool IsPurchased
     {
