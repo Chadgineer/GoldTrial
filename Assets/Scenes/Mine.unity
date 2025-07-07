@@ -6748,8 +6748,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1454518546}
     - target: {fileID: 2397496307209407271, guid: 073e0cb6be7ea834585adec6abd06d50, type: 3}
+      propertyPath: shootSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397496307209407271, guid: 073e0cb6be7ea834585adec6abd06d50, type: 3}
       propertyPath: returnSpeed
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2397496307209407271, guid: 073e0cb6be7ea834585adec6abd06d50, type: 3}
       propertyPath: goldOreManager

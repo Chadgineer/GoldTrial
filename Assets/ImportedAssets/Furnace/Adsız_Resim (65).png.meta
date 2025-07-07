@@ -15,7 +15,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -210,7 +210,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "Ads\u0131z_Resim (65)_0": -9144800971566809909
+      "Ads\u0131z_Resim (65)_1": 5533392977177871448
+      "Ads\u0131z_Resim (65)_2": 5503254808996938573
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

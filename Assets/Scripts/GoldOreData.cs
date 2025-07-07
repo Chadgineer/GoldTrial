@@ -3,28 +3,28 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/MoneyData")]
 public class GoldOreData : ScriptableObject
 {
-    [SerializeField] private int value;
+    [SerializeField] private int goldOreValue;
     [SerializeField] private int goldIngotValue;
     [SerializeField] private int moneyValue;
 
-    public int goldOres => value;
+    public int goldOres => goldOreValue;
     public int goldIngot => goldIngotValue;
     public int Money => moneyValue;
 
     public void SetGoldOre(int val)
     {
-        value = val;
+        goldOreValue = val;
     }
 
     public void AddGoldOre(int amount)
     {
-        value += amount;
+        goldOreValue += amount;
     }
 
     public bool SpendGoldOre(int amount)
     {
-        if (value < amount) return false;
-        value -= amount;
+        if (goldOreValue < amount) return false;
+        goldOreValue -= amount;
         return true;
     }
     public void SetGoldIngot(int val)

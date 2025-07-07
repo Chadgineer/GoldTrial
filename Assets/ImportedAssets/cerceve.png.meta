@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2f528dd3f2642ee459a17a2342326caa
+guid: 12f24461f1989184d8177469bb8885fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5930463899640123298
-    second: "Ads\u0131z_Resim-1_0"
+      213: 9197304086652216982
+    second: cerceve_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,30 +122,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ads\u0131z_Resim-1_0"
+      name: cerceve_0
       rect:
         serializedVersion: 2
-        x: 189
-        y: 459
-        width: 302
-        height: 305
+        x: 0
+        y: 0
+        width: 1576
+        height: 2212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2afc35bee7d3d4250800000000000000
-      internalID: 5930463899640123298
+      spriteID: 6966720665363af70800000000000000
+      internalID: 9197304086652216982
       vertices: []
       indices: 
       edges: []
@@ -174,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Ads\u0131z_Resim-1_0": 5930463899640123298
+      cerceve_0: 9197304086652216982
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

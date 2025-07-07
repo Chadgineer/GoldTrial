@@ -2,22 +2,21 @@ using UnityEngine;
 
 public class RopeShooter : MonoBehaviour
 {
+    private enum RopeState { Idle, Shooting, Returning }
+    private RopeState state = RopeState.Idle;
+
     [SerializeField] private float shootSpeed = 10f;
     [SerializeField] private float maxLength = 8f;
     [SerializeField] private float returnSpeed = 12f;
+    [SerializeField] private GoldOreManager goldOreManager;
+    [SerializeField] private Spawner spawner;
 
     private Vector3 initialPosition;
     private Vector3 shootDirection;
     private float currentLength = 0f;
-
-    private bool isShooting = false;
-    private bool isReturning = false;
     private Transform grabbedObject = null;
 
-    [SerializeField] private GoldOreManager goldOreManager;
-    [SerializeField] private Spawner spawner;
-
-    public bool IsIdle => !isShooting && !isReturning;
+    public bool IsIdle => state == RopeState.Idle;
 
     void Start()
     {
@@ -26,62 +25,74 @@ public class RopeShooter : MonoBehaviour
 
     void Update()
     {
-        if (isShooting)
+        switch (state)
         {
-            transform.position += shootDirection * shootSpeed * Time.deltaTime;
-            currentLength += shootSpeed * Time.deltaTime;
-
-            if (currentLength >= maxLength)
-            {
-                isShooting = false;
-                isReturning = true;
-            }
-        }
-        else if (isReturning)
-        {
-            Vector3 dir = (initialPosition - transform.position).normalized;
-            transform.position += dir * returnSpeed * Time.deltaTime;
-
-            if (Vector3.Distance(transform.position, initialPosition) < 0.1f)
-            {
-                transform.position = initialPosition;
-                currentLength = 0f;
-                isReturning = false;
-
-                if (grabbedObject != null)
-                {
-                    grabbedObject.SetParent(null);
-                    switch (grabbedObject.tag)
-                    {
-                        case "gold1":
-                            goldOreManager.AddGoldOre(1);
-                            break;
-                        case "gold2":
-                            goldOreManager.AddGoldOre(2);
-                            break;
-                        case "gold3":
-                            goldOreManager.AddGoldOre(4);
-                            break;
-                        default:
-                            break;
-                    }
-                    Destroy(grabbedObject.gameObject);
-                    grabbedObject = null;
-                    spawner.CheckGolds(); 
-                }
-            }
+            case RopeState.Shooting:
+                MoveOut();
+                break;
+            case RopeState.Returning:
+                ReturnBack();
+                break;
         }
     }
 
     public void Shoot(Vector3 direction)
     {
+        if (state != RopeState.Idle)
+            return;
         shootDirection = direction.normalized;
-        isShooting = true;
+        state = RopeState.Shooting;
+    }
+
+    private void MoveOut()
+    {
+        transform.position += shootDirection * shootSpeed * Time.deltaTime;
+        currentLength += shootSpeed * Time.deltaTime;
+        if (currentLength >= maxLength)
+        {
+            state = RopeState.Returning;
+        }
+    }
+
+    private void ReturnBack()
+    {
+        Vector3 dir = (initialPosition - transform.position).normalized;
+        float moveDelta = returnSpeed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, initialPosition) <= moveDelta)
+        {
+            transform.position = initialPosition;
+            currentLength = 0f;
+            state = RopeState.Idle;
+
+            if (grabbedObject != null)
+            {
+                grabbedObject.SetParent(null);
+                var goldType = grabbedObject.tag;
+                int goldValue = 0;
+                switch (goldType)
+                {
+                    case "gold1": goldValue = 1; break;
+                    case "gold2": goldValue = 2; break;
+                    case "gold3": goldValue = 4; break;
+                }
+                if (goldValue > 0)
+                    goldOreManager.AddGoldOre(goldValue);
+
+                Destroy(grabbedObject.gameObject);
+                grabbedObject = null;
+                spawner.CheckGolds();
+            }
+        }
+        else
+        {
+            transform.position += dir * moveDelta;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isShooting) return;
+        if (state != RopeState.Shooting) return;
 
         grabbedObject = other.transform;
         grabbedObject.SetParent(transform);
@@ -91,25 +102,20 @@ public class RopeShooter : MonoBehaviour
             case "gold1":
                 grabbedObject.localPosition = new Vector3(0f, -1.75f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.AddGoldOre(1);
                 break;
             case "gold2":
                 grabbedObject.localPosition = new Vector3(0f, -3.75f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.AddGoldOre(2);
                 break;
             case "gold3":
                 grabbedObject.localPosition = new Vector3(0f, -5.25f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
-                goldOreManager.AddGoldOre(3);
                 break;
             default:
                 grabbedObject.localPosition = new Vector3(0f, 0f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
                 break;
         }
-
-        isShooting = false;
-        isReturning = true;
+        state = RopeState.Returning;
     }
 }
