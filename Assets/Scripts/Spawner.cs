@@ -25,7 +25,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private GameObject furnaceButton;
     [SerializeField] private GameObject restartButton;
+    [SerializeField] private GameObject hookInfoUI;
 
+    public HeartManager heartManager;
     private readonly HashSet<Vector2> occupiedPositions = new();
     public GameObject[] spawnedOres;
 
@@ -91,14 +93,25 @@ public class Spawner : MonoBehaviour
         Time.timeScale = 0f;
         furnaceButton.SetActive(true);
         restartButton.SetActive(true);
+        hookInfoUI.SetActive(true);
     }
 
     public void RestartScene()
     {
-        Time.timeScale = 1f;
-        SpawnObjects();
-        furnaceButton.SetActive(false);
-        restartButton.SetActive(false);
+        if (heartManager.currentHearts > 0)
+        {
+            heartManager.currentHearts--;
+            Time.timeScale = 1f;
+            SpawnObjects();
+            furnaceButton.SetActive(false);
+            restartButton.SetActive(false);
+            hookInfoUI.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("No hearts left, cannot restart.");
+            return;
+        }
     }
 
     public void FurnaceScene()
