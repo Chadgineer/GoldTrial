@@ -4,13 +4,13 @@ using UnityEngine;
 public class GoldOreManager : MonoBehaviour
 {
     [SerializeField] private GoldOreData goldOreData;
-    private const string MoneyKey = "Money";
+    private const string GoldOreKey = "Money";
     [SerializeField] private TextMeshProUGUI goldOreUI;
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        int saved = PlayerPrefs.GetInt(MoneyKey, 0);
+        int saved = PlayerPrefs.GetInt(GoldOreKey, 0);
         goldOreData.SetGoldOre(saved);
         UpdateGoldOreUI();
     }
@@ -27,12 +27,13 @@ public class GoldOreManager : MonoBehaviour
         UpdateGoldOreUI();
     }
     public bool SpendGoldOre(int amount)
-    { 
-        bool result = goldOreData.Spend(amount);
+    {
+        bool result = goldOreData.SpendGoldOre(amount); // Updated method call
         if (result) SaveGoldOre();
         UpdateGoldOreUI();
         return result;
     }
+
 
     public int GetGoldOre()
     {
@@ -42,7 +43,7 @@ public class GoldOreManager : MonoBehaviour
 
     private void SaveGoldOre()
     {
-        PlayerPrefs.SetInt(MoneyKey, goldOreData.goldOres);
+        PlayerPrefs.SetInt(GoldOreKey, goldOreData.goldOres);
         PlayerPrefs.Save();
         UpdateGoldOreUI();
     }
