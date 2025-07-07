@@ -9,7 +9,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -129,9 +129,9 @@ TextureImporter:
       name: "Ads\u0131z_Resim 2 (1)_0"
       rect:
         serializedVersion: 2
-        x: 27
-        y: 13
-        width: 552
+        x: 37
+        y: 54
+        width: 835
         height: 344
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "Ads\u0131z_Resim 2 (1)_0": 4749113940376107285
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

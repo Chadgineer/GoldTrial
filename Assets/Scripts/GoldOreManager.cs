@@ -16,7 +16,7 @@ public class GoldOreManager : MonoBehaviour
     }
 
     public void UpdateGoldOreUI()
-    {
+    { 
         goldOreUI.text = goldOreData.goldOres.ToString();
     }
 
@@ -32,14 +32,12 @@ public class GoldOreManager : MonoBehaviour
         if (result) SaveGoldOre();
         UpdateGoldOreUI();
         return result;
-       
     }
 
     public int GetGoldOre()
     {
         UpdateGoldOreUI();
         return goldOreData.goldOres;
-        
     }
 
     private void SaveGoldOre()

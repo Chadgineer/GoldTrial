@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class PrefabChance
@@ -22,11 +23,20 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float checkRadius = 0.5f;
     [SerializeField] private LayerMask spawnLayer;
 
+    [SerializeField] private GameObject furnaceButton;
+    [SerializeField] private GameObject restartButton;
+
     private readonly HashSet<Vector2> occupiedPositions = new();
+    public GameObject[] spawnedOres;
 
     private void Start()
     {
-        int spawnTotal = UnityEngine.Random.Range(minSpawnCount, maxSpawnCount + 1);
+        SpawnObjects();
+    }
+
+    void SpawnObjects()
+    {
+        int spawnTotal = UnityEngine.Random.Range(minSpawnCount, maxSpawnCount);
         int spawned = 0;
 
         while (spawned < spawnTotal)
@@ -39,6 +49,7 @@ public class Spawner : MonoBehaviour
             occupiedPositions.Add(spawnPos);
             spawned++;
         }
+        CheckGolds();
     }
 
     private GameObject GetRandomPrefab()
@@ -57,8 +68,42 @@ public class Spawner : MonoBehaviour
                 return pc.prefab;
         }
 
-        // Fallback (should not hit)
         return prefabChances[0].prefab;
+    }
+
+    public void CheckGolds()
+    {
+        List<GameObject> golds = new();
+        golds.AddRange(GameObject.FindGameObjectsWithTag("gold1"));
+        golds.AddRange(GameObject.FindGameObjectsWithTag("gold2"));
+        golds.AddRange(GameObject.FindGameObjectsWithTag("gold3"));
+        spawnedOres = golds.ToArray();
+
+        if (spawnedOres.Length == 1)
+        {
+            AllCollected(true);
+        }
+    }
+
+    public void AllCollected(bool allCollected)
+    {
+        Debug.Log("All Collected");
+        Time.timeScale = 0f;
+        furnaceButton.SetActive(true);
+        restartButton.SetActive(true);
+    }
+
+    public void RestartScene()
+    {
+        Time.timeScale = 1f;
+        SpawnObjects();
+        furnaceButton.SetActive(false);
+        restartButton.SetActive(false);
+    }
+
+    public void FurnaceScene()
+    {
+        SceneManager.LoadScene(2);
     }
 
     private Vector2 GetRandomPosition()

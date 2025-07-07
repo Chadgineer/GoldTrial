@@ -78,7 +78,7 @@ TextureImporter:
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -735,7 +735,31 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      man-logo-default_0: 4824813327859626577
+      man-logo-default_1: 8345026442500887372
+      man-logo-default_10: -5781697109059701037
+      man-logo-default_11: -7869974921811861362
+      man-logo-default_12: -1747779955650920993
+      man-logo-default_13: 588980572374422075
+      man-logo-default_14: 4147885163350344318
+      man-logo-default_15: 6656874730005392375
+      man-logo-default_16: 1297705474346902851
+      man-logo-default_17: 6391779932692741697
+      man-logo-default_18: -7538040452691913628
+      man-logo-default_19: -7162199631915189273
+      man-logo-default_2: -4750461552616690943
+      man-logo-default_20: -2916610523296391920
+      man-logo-default_21: 4882668449520030075
+      man-logo-default_22: -6664789944566680676
+      man-logo-default_23: 2478708964239842937
+      man-logo-default_3: -5305051424040487566
+      man-logo-default_4: -7923532144622046998
+      man-logo-default_5: -6571610222537624016
+      man-logo-default_6: 5923935166676667288
+      man-logo-default_7: 3121265877083357609
+      man-logo-default_8: -315889541817934531
+      man-logo-default_9: 3270616917229497106
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

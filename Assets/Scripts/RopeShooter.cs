@@ -15,6 +15,7 @@ public class RopeShooter : MonoBehaviour
     private Transform grabbedObject = null;
 
     [SerializeField] private GoldOreManager goldOreManager;
+    [SerializeField] private Spawner spawner;
 
     public bool IsIdle => !isShooting && !isReturning;
 
@@ -50,8 +51,23 @@ public class RopeShooter : MonoBehaviour
                 if (grabbedObject != null)
                 {
                     grabbedObject.SetParent(null);
+                    switch (grabbedObject.tag)
+                    {
+                        case "gold1":
+                            goldOreManager.AddGoldOre(1);
+                            break;
+                        case "gold2":
+                            goldOreManager.AddGoldOre(2);
+                            break;
+                        case "gold3":
+                            goldOreManager.AddGoldOre(4);
+                            break;
+                        default:
+                            break;
+                    }
                     Destroy(grabbedObject.gameObject);
                     grabbedObject = null;
+                    spawner.CheckGolds(); 
                 }
             }
         }
