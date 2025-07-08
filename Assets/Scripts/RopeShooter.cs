@@ -75,9 +75,12 @@ public class RopeShooter : MonoBehaviour
                     case "gold1": goldValue = 1; break;
                     case "gold2": goldValue = 2; break;
                     case "gold3": goldValue = 4; break;
+                    case "obstacle1": break;
+                    case "obstacle2": goldValue = -2; break;
                 }
-                if (goldValue > 0)
+
                     goldOreManager.AddGoldOre(goldValue);
+
 
                 Destroy(grabbedObject.gameObject);
                 grabbedObject = null;
@@ -109,6 +112,15 @@ public class RopeShooter : MonoBehaviour
                 break;
             case "gold3":
                 grabbedObject.localPosition = new Vector3(0f, -5.25f, 1f);
+                grabbedObject.localEulerAngles = Vector3.zero;
+                break;
+            case "obstacle1":
+                grabbedObject.localPosition = new Vector3(0f, 0f, 1f);
+                grabbedObject.localEulerAngles = Vector3.zero;
+                break;
+            case "obstacle2":
+                goldOreManager.SpendGoldIngot(1);
+                grabbedObject.localPosition = new Vector3(0f, 0f, 1f);
                 grabbedObject.localEulerAngles = Vector3.zero;
                 break;
             default:

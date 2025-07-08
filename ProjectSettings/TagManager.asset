@@ -7,6 +7,8 @@ TagManager:
   - gold1
   - gold2
   - gold3
+  - obstacle1
+  - obstacle2
   layers:
   - Default
   - TransparentFX

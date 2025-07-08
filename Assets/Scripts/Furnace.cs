@@ -1,39 +1,28 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI; // UI Image için
 
 public class Furnace : MonoBehaviour
 {
     [SerializeField] private GoldOreManager goldOreManager;
+    [SerializeField] private Image progressFillImage; // Fill bar için Image referansý
 
-    bool isPurchased; 
-    public int level = 0;
     public int craftTime = 5;
     public int stackSize = 5;
-    float craftTimeHold;
+    private bool isCrafting = false;
 
     private void Awake()
     {
-        craftTimeHold = craftTime;
+        // Gerekirse init iþlemleri
     }
+
     public void StartCrafting()
     {
-        goldOreManager.UpdateGoldIngotUI();
         if (goldOreManager == null)
             goldOreManager = Object.FindFirstObjectByType<GoldOreManager>();
-
-        if (goldOreManager == null)
-        {
-            return;
-        }
-
+        if (goldOreManager == null) return;
         if (!isCrafting)
-        {
             StartCoroutine(CraftCoroutine());
-            Debug.Log("Crafting started. Level: " + level + ", Craft Time: " + craftTime + ", Stack Size: " + stackSize); 
-        }
     }
-
-    private bool isCrafting = false;
 
     private System.Collections.IEnumerator CraftCoroutine()
     {
@@ -42,7 +31,16 @@ public class Furnace : MonoBehaviour
 
         while (crafted < stackSize && goldOreManager.GetGoldOre() > 0)
         {
-            yield return new WaitForSeconds(craftTime);
+            float timer = 0f;
+            while (timer < craftTime)
+            {
+                timer += Time.deltaTime;
+                float fill = Mathf.Clamp01(timer / craftTime); // 0 -> 1
+                progressFillImage.fillAmount = fill; // 0% -> 100%
+                yield return null;
+            }
+
+            progressFillImage.fillAmount = 1f;
 
             if (goldOreManager.SpendGoldOre(1))
             {
@@ -54,10 +52,9 @@ public class Furnace : MonoBehaviour
             {
                 break;
             }
-            
         }
 
+        progressFillImage.fillAmount = 0f;
         isCrafting = false;
     }
-    public GameObject notPurchasedPanel;
 }

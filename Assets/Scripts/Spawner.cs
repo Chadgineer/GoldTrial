@@ -79,6 +79,8 @@ public class Spawner : MonoBehaviour
         golds.AddRange(GameObject.FindGameObjectsWithTag("gold1"));
         golds.AddRange(GameObject.FindGameObjectsWithTag("gold2"));
         golds.AddRange(GameObject.FindGameObjectsWithTag("gold3"));
+        golds.AddRange(GameObject.FindGameObjectsWithTag("obstacle1"));
+        golds.AddRange(GameObject.FindGameObjectsWithTag("obstacle2"));
         spawnedOres = golds.ToArray();
 
         if (spawnedOres.Length == 1)
@@ -106,6 +108,7 @@ public class Spawner : MonoBehaviour
             furnaceButton.SetActive(false);
             restartButton.SetActive(false);
             hookInfoUI.SetActive(false);
+            CheckGolds();
         }
         else
         {
@@ -116,6 +119,7 @@ public class Spawner : MonoBehaviour
 
     public void FurnaceScene()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(2);
     }
 

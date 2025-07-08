@@ -9,6 +9,7 @@ public class GoldOreManager : MonoBehaviour
     private const string MoneyKey = "Money";
     [SerializeField] private TextMeshProUGUI goldOreUI;
     [SerializeField] private TextMeshProUGUI goldIngotUI;
+    [SerializeField] private TextMeshProUGUI moneyUI;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class GoldOreManager : MonoBehaviour
         goldOreData.SetMoney(PlayerPrefs.GetInt(MoneyKey, 0));
         UpdateGoldOreUI();
         UpdateGoldIngotUI();
+        UpdateMoneyUI();
     }
 
     public void UpdateGoldOreUI()
@@ -84,7 +86,11 @@ public class GoldOreManager : MonoBehaviour
         PlayerPrefs.Save();
         UpdateGoldIngotUI();
     }
-
+    public void UpdateMoneyUI()
+    {
+        if (moneyUI == null) return;
+        moneyUI.text = goldOreData.Money.ToString();
+    }
     public void AddMoney(int amount)
     {
         goldOreData.AddMoney(amount);
@@ -103,5 +109,49 @@ public class GoldOreManager : MonoBehaviour
         PlayerPrefs.SetInt(MoneyKey, goldOreData.Money);
         PlayerPrefs.Save();
         UpdateGoldOreUI();
+    }
+
+    public void SellGolds250()
+    {
+        if (goldOreData.goldIngot > 0)
+        {
+            SpendGoldIngot(1);
+            AddMoney(100);
+            UpdateGoldIngotUI();
+            UpdateMoneyUI();
+        }
+    }
+
+    public void SellGolds500()
+    {
+        if (goldOreData.goldIngot > 1)
+        {
+            SpendGoldIngot(2);
+            AddMoney(225);
+            UpdateGoldIngotUI();
+            UpdateMoneyUI();
+        }
+    }
+
+    public void SellGolds750()
+    {
+        if (goldOreData.goldIngot > 2)
+        {
+            SpendGoldIngot(3);
+            AddMoney(350);
+            UpdateGoldIngotUI();
+            UpdateMoneyUI();
+        }
+    }
+
+    public void SellGolds1000()
+    {
+        if (goldOreData.goldIngot > 0)
+        {
+            SpendGoldIngot(4);
+            AddMoney(500);
+            UpdateGoldIngotUI();
+            UpdateMoneyUI();
+        }
     }
 }
