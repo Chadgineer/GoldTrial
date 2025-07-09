@@ -154,4 +154,24 @@ public class GoldOreManager : MonoBehaviour
             UpdateMoneyUI();
         }
     }
+
+
+    public void Gold1button()
+    {
+        goldOreData.AddGoldOre(1);
+        UpdateGoldOreUI();
+    }
+
+    public void Gold2button()
+    {
+        goldOreData.AddGoldOre(2);
+        UpdateGoldOreUI();
+    }
+
+
+    public void BombButton()
+    {
+        goldOreData.AddGoldOre(-5);
+        UpdateGoldOreUI();
+    }
 }

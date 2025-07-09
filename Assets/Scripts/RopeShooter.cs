@@ -4,6 +4,7 @@ public class RopeShooter : MonoBehaviour
 {
     private enum RopeState { Idle, Shooting, Returning }
     private RopeState state = RopeState.Idle;
+    private RopeState prevState = RopeState.Idle;
 
     [SerializeField] private float shootSpeed = 10f;
     [SerializeField] private float maxLength = 8f;
@@ -16,15 +17,24 @@ public class RopeShooter : MonoBehaviour
     private float currentLength = 0f;
     private Transform grabbedObject = null;
 
+    [SerializeField] private Animator bobAnimation;
+
     public bool IsIdle => state == RopeState.Idle;
 
     void Start()
     {
         initialPosition = transform.position;
+        prevState = state;
     }
 
     void Update()
     {
+        if (prevState != state)
+        {
+            bobAnimation.SetBool("isPulling", state == RopeState.Returning);
+            prevState = state;
+        }
+
         switch (state)
         {
             case RopeState.Shooting:
@@ -78,9 +88,7 @@ public class RopeShooter : MonoBehaviour
                     case "obstacle1": break;
                     case "obstacle2": goldValue = -2; break;
                 }
-
-                    goldOreManager.AddGoldOre(goldValue);
-
+                goldOreManager.AddGoldOre(goldValue);
 
                 Destroy(grabbedObject.gameObject);
                 grabbedObject = null;

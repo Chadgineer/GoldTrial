@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 1070f4042c4ae894db49cc855ea7027c
+guid: 6e58864d81dd1f444b43488365005ffe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5930463899640123298
-    second: "Ads\u0131z_Resim-1_0"
+      213: -3782969933325773671
+    second: "Ads\u0131z_Resim (70)_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Ads\u0131z_Resim-1_0"
+      name: "Ads\u0131z_Resim (70)_0"
       rect:
         serializedVersion: 2
-        x: 682
-        y: 474
-        width: 651
-        height: 980
-      alignment: 9
-      pivot: {x: 0.5759733, y: 0.42978352}
+        x: 120
+        y: 85
+        width: 903
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2afc35bee7d3d4250800000000000000
-      internalID: 5930463899640123298
+      spriteID: 994522083e0308bc0800000000000000
+      internalID: -3782969933325773671
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 867bbcedd847c8142accc5d597d8e4a1
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      "Ads\u0131z_Resim-1_0": 5930463899640123298
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
