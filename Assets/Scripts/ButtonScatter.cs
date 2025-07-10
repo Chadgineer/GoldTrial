@@ -53,7 +53,7 @@ public class ButtonScatter : MonoBehaviour
                 rect.anchoredPosition = pos;
                 btnRect = GetRectOnCanvas(rect);
                 attempts++;
-                if (attempts > 1000) break;
+                if (attempts > 100) break;
             } while (Overlaps(btnRect, occupiedRects));
 
             occupiedRects.Add(btnRect);

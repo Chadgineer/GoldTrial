@@ -146,7 +146,7 @@ public class GoldOreManager : MonoBehaviour
 
     public void SellGolds1000()
     {
-        if (goldOreData.goldIngot > 0)
+        if (goldOreData.goldIngot > 3)
         {
             SpendGoldIngot(4);
             AddMoney(500);

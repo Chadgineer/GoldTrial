@@ -2620,7 +2620,7 @@ RectTransform:
   m_GameObject: {fileID: 1532955148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 889971880}
@@ -6521,11 +6521,11 @@ MonoBehaviour:
   rock2: {fileID: 1959283635}
   rock3: {fileID: 1809821065}
   bomb: {fileID: 1730201957}
-  leftOffset: 1
-  rightOffset: 1
-  topOffset: 600
-  bottomOffset: 1
-  overlapPadding: 1
+  leftOffset: 100
+  rightOffset: 100
+  topOffset: 800
+  bottomOffset: 300
+  overlapPadding: 15
 --- !u!4 &1651749912
 Transform:
   m_ObjectHideFlags: 0
@@ -6714,7 +6714,7 @@ RectTransform:
   m_GameObject: {fileID: 1730201956}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 889971880}
@@ -6883,7 +6883,7 @@ RectTransform:
   m_GameObject: {fileID: 1809821064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 889971880}
@@ -6969,7 +6969,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8667732671591528966, guid: de10d23bb1c5fe94c9cefd2241f292f2, type: 3}
+  m_Sprite: {fileID: -5027914833932473764, guid: 2837d62e44d9e92489c8ec9433c0b973, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7304,7 +7304,7 @@ RectTransform:
   m_GameObject: {fileID: 1959283634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 889971880}
