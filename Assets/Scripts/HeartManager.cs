@@ -24,7 +24,9 @@ public class HeartManager : MonoBehaviour
 
     void Start()
     {
+        
         StartCoroutine(LoadTimeFromInternet());
+        currentHearts--;
     }
 
     IEnumerator LoadTimeFromInternet()
@@ -110,4 +112,10 @@ public class HeartManager : MonoBehaviour
     {
         public string utc_datetime;
     }
+
+    public void MinusHearth()
+    {
+        currentHearts--;
+    }
+
 }
