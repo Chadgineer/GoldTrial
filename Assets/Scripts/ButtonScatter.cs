@@ -1,8 +1,9 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ButtonScatter : MonoBehaviour
 {
+    [Header("UI Elemanlarý")]
     [SerializeField] private RectTransform canvasRect;
     [SerializeField] private RectTransform gold1;
     [SerializeField] private RectTransform gold2;
@@ -11,52 +12,56 @@ public class ButtonScatter : MonoBehaviour
     [SerializeField] private RectTransform rock3;
     [SerializeField] private RectTransform bomb;
 
+    [Header("Parametreler")]
     [SerializeField] private float leftOffset = 40f;
     [SerializeField] private float rightOffset = 40f;
     [SerializeField] private float topOffset = 40f;
     [SerializeField] private float bottomOffset = 40f;
-    [SerializeField] private float overlapPadding = 15f;
+    [SerializeField] private float overlapPadding = 15f; 
 
-    private readonly List<RectTransform> activeRects = new();
+    private const int MaxAttempts = 200;
 
     public void ScatterButtons()
     {
-        gold1.gameObject.SetActive(true);
-        gold2.gameObject.SetActive(true);
+        // 1) Hangi butonlar aktif olacak?
+        bool showFirstGold = Random.value > 0.5f;
+        gold1.gameObject.SetActive(showFirstGold);
+        gold2.gameObject.SetActive(!showFirstGold);
         rock1.gameObject.SetActive(true);
         rock2.gameObject.SetActive(true);
         rock3.gameObject.SetActive(true);
         bomb.gameObject.SetActive(true);
 
-        bool showFirstGold = Random.value > 0.5f;
-        gold1.gameObject.SetActive(showFirstGold);
-        gold2.gameObject.SetActive(!showFirstGold);
-
-        activeRects.Clear();
-        activeRects.Add(showFirstGold ? gold1 : gold2);
-        activeRects.Add(rock1);
-        activeRects.Add(rock2);
-        activeRects.Add(rock3);
-        activeRects.Add(bomb);
-
-        List<Rect> occupiedRects = new();
-
-        foreach (var rect in activeRects)
+        // 2) Aktif RectTransform’larý listele
+        var activeRects = new List<RectTransform>
         {
-            Vector2 size = rect.sizeDelta + new Vector2(overlapPadding, overlapPadding);
-            Vector2 pos;
-            Rect btnRect;
-            int attempts = 0;
+            showFirstGold ? gold1 : gold2,
+            rock1, rock2, rock3,
+            bomb
+        };
+
+        // 3) Yerleþmiþ dikdörtgenleri tutacak liste
+        var occupied = new List<Rect>();
+
+        // 4) Tek tek butonlarý yerleþtir
+        foreach (var rt in activeRects)
+        {
+            Vector2 paddedSize = rt.sizeDelta + Vector2.one * overlapPadding;
+            Rect candidateRect = new Rect();
+            int attempt = 0;
+
+            // Tekrar tekrar rasgele pozisyon dene
             do
             {
-                pos = GetRandomPosition(size);
-                rect.anchoredPosition = pos;
-                btnRect = GetRectOnCanvas(rect);
-                attempts++;
-                if (attempts > 100) break;
-            } while (Overlaps(btnRect, occupiedRects));
+                Vector2 pos = GetRandomPosition(paddedSize);
+                rt.anchoredPosition = pos;
+                candidateRect = GetRectOnCanvas(rt);
+                attempt++;
+            }
+            while (attempt < MaxAttempts && Overlaps(candidateRect, occupied));
 
-            occupiedRects.Add(btnRect);
+            // Bulunan (ya da son denen) dikdörtgeni kilitle
+            occupied.Add(candidateRect);
         }
     }
 
@@ -67,18 +72,16 @@ public class ButtonScatter : MonoBehaviour
         float maxX = canvasSize.x * 0.5f - size.x * 0.5f - rightOffset;
         float minY = -canvasSize.y * 0.5f + size.y * 0.5f + bottomOffset;
         float maxY = canvasSize.y * 0.5f - size.y * 0.5f - topOffset;
-        float x = Random.Range(minX, maxX);
-        float y = Random.Range(minY, maxY);
-        return new Vector2(x, y);
+        return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }
 
-    // RectTransform'un canvas üzerindeki köþelerini kullanarak gerçek alanýný döndürür
-    private Rect GetRectOnCanvas(RectTransform rect)
+    private Rect GetRectOnCanvas(RectTransform rt)
     {
+        // Dünya-köþelerini al
         Vector3[] corners = new Vector3[4];
-        rect.GetWorldCorners(corners);
+        rt.GetWorldCorners(corners);
 
-        // Canvas'ýn world-space'ine çevir
+        // Canvas’ýn local alanýna dönüþtür
         Vector2 min = canvasRect.InverseTransformPoint(corners[0]);
         Vector2 max = canvasRect.InverseTransformPoint(corners[2]);
         return new Rect(min, max - min);
@@ -86,11 +89,9 @@ public class ButtonScatter : MonoBehaviour
 
     private bool Overlaps(Rect rect, List<Rect> others)
     {
-        foreach (var other in others)
-        {
-            if (rect.Overlaps(other, true)) // true ile çapraz kenarlarý da kapsar
+        foreach (var o in others)
+            if (rect.Overlaps(o, true))
                 return true;
-        }
         return false;
     }
 }
